@@ -10,9 +10,11 @@
 
 var express = require('express');
 var app = express();
+var logfmt = require("logfmt");
 
 app.use(express.bodyParser());
- 
+app.use(logfmt.requestLogger());
+
 var sessions = {};
 
 // simple logger
@@ -69,5 +71,7 @@ function Follower(){
 
 }
 
-app.listen(3000);
-console.log('Listening on port 3000');
+var port = Number(process.env.PORT || 3000);
+app.listen(port, function() {
+  console.log("Listening on " + port);
+}); 
