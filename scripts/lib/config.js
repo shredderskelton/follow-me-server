@@ -1,5 +1,5 @@
 module.exports = {
-  host: 'polar-escarpment-6759.herokuapp.com',
+  host: 'follow-me-far.herokuapp.com',
   port: 80
 };
 
