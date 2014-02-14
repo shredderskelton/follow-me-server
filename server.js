@@ -47,6 +47,31 @@ app.get('/session/:sessionId', function(req, res){
   res.json({result : session});
 });
 
+app.get('/search/:sessionId', function(req, res){
+
+  //build names for all sessions 
+  var sessionKeys = [];
+  for (var key in sessions) {
+      if (sessions.hasOwnProperty(key)) {
+          sessionKeys.push(key);
+      }
+  }
+
+  //find matches
+  var matches = [];
+  var idx=-1;
+  
+  for(var i=0; i<sessionKeys.length; i++){
+    idx = sessionKeys[i].toLowerCase().indexOf(req.params.sessionId);
+    if(idx===0)
+      matches.push(sessionKeys[i]);
+  }
+ 
+  console.log('returning ' + matches.length + ' matches for: ' + req.params.sessionId);
+  res.setHeader('Content-Type', 'application/json');
+  res.json({result : matches});
+});
+
 app.post('/session/:sessionId/user/:username', function(req, res){
 
   console.log('session id = ' + req.params.sessionId);
