@@ -40,11 +40,16 @@ app.param('sessionId', function(req, res, next, id){
 
 app.get('/session/:sessionId', function(req, res){
 
-  var session = sessions[req.params.sessionId];
+  var sessionPins = sessions[req.params.sessionId];
+
+  var ret = {
+    session : req.params.sessionId,
+    pins : sessionPins
+  };
 
   console.log('returning session with id = ' + req.params.sessionId);
   res.setHeader('Content-Type', 'application/json');
-  res.json({result : session});
+  res.json({result : ret});
 });
 
 app.get('/search/:sessionId', function(req, res){
@@ -67,6 +72,7 @@ app.get('/search/:sessionId', function(req, res){
       matches.push(sessionKeys[i]);
   }
  
+
   console.log('returning ' + matches.length + ' matches for: ' + req.params.sessionId);
   res.setHeader('Content-Type', 'application/json');
   res.json({result : matches});
