@@ -38,7 +38,7 @@ module.exports = function(options, data, callback) {
     // TODO: handle error.
   });
 
-  console.log('userString = ' + userString);
+  //console.log('userString = ' + userString);
  
   req.write(userString);
   req.end();
