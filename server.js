@@ -75,7 +75,7 @@ app.get('/search/:sessionId', function(req, res){
 
   console.log('returning ' + matches.length + ' matches for: ' + req.params.sessionId);
   res.setHeader('Content-Type', 'application/json');
-  res.json({result : matches});
+  res.json(matches);
 });
 
 app.post('/session/:sessionId/user/:username', function(req, res){
