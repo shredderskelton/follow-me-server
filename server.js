@@ -15,7 +15,7 @@ var logfmt = require("logfmt");
 app.use(express.bodyParser());
 app.use(logfmt.requestLogger());
 
-var sessions = {};
+var groups = {};
 
 // simple logger
 app.use(function(req, res, next){
@@ -24,41 +24,41 @@ app.use(function(req, res, next){
   next();
 });
  
-app.param('sessionId', function(req, res, next, id){
+app.param('groupId', function(req, res, next, id){
 
   //TODO put some validation in
   console.log('validation id = ' + id);
   next();
 
-   // if(sessionId === sessionId){ 
-      // req.sessionId = sessionId;
+   // if(groupId === groupId){ 
+      // req.groupId = groupId;
       // next();
     // } else {
     //   next(new Error('failed to load user'));
     // } 
 });
 
-app.get('/session/:sessionId', function(req, res){
+app.get('/group/:groupId', function(req, res){
 
-  var sessionPins = sessions[req.params.sessionId];
+  var groupPins = groups[req.params.groupId];
 
   var ret = {
-    session : req.params.sessionId,
-    pins : sessionPins
+    group : req.params.groupId,
+    members : groupPins
   };
 
-  console.log('returning session with id = ' + req.params.sessionId);
+  console.log('returning group with id = ' + req.params.groupId);
   res.setHeader('Content-Type', 'application/json');
-  res.json({result : ret});
+  res.json(ret);
 });
 
-app.get('/search/:sessionId', function(req, res){
+app.get('/search/:groupId', function(req, res){
 
-  //build names for all sessions 
-  var sessionKeys = [];
-  for (var key in sessions) {
-      if (sessions.hasOwnProperty(key)) {
-          sessionKeys.push(key);
+  //build names for all groups 
+  var groupKeys = [];
+  for (var key in groups) {
+      if (groups.hasOwnProperty(key)) {
+          groupKeys.push(key);
       }
   }
 
@@ -66,36 +66,36 @@ app.get('/search/:sessionId', function(req, res){
   var matches = [];
   var idx=-1;
   
-  for(var i=0; i<sessionKeys.length; i++){
-    idx = sessionKeys[i].toLowerCase().indexOf(req.params.sessionId);
+  for(var i=0; i<groupKeys.length; i++){
+    idx = groupKeys[i].toLowerCase().indexOf(req.params.groupId);
     if(idx===0)
-      matches.push(sessionKeys[i]);
+      matches.push(groupKeys[i]);
   }
  
 
-  console.log('returning ' + matches.length + ' matches for: ' + req.params.sessionId);
+  console.log('returning ' + matches.length + ' matches for: ' + req.params.groupId);
   res.setHeader('Content-Type', 'application/json');
   res.json(matches);
 });
 
-app.post('/session/:sessionId/user/:username', function(req, res){
+app.post('/group/:groupId/user/:username', function(req, res){
 
-  console.log('session id = ' + req.params.sessionId);
+  console.log('group id = ' + req.params.groupId);
   console.log('username = ' + req.params.username);
   console.log('body = ' + req.body);
 
-  var session = sessions[req.params.sessionId];
+  var group = groups[req.params.groupId];
 
-  if(typeof session === 'undefined'){
-    console.log('Created session');
-    session = {};
-    sessions[req.params.sessionId] = session;
+  if(typeof group === 'undefined'){
+    console.log('Created group');
+    group = {};
+    groups[req.params.groupId] = group;
   }
 
-  session[req.body.name] = req.body;
+  group[req.body.name] = req.body;
 
   res.setHeader('Content-Type', 'application/json'); 
-  res.json({result : session});
+  res.json(group);
 });
 
 function Follower(){
