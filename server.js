@@ -20,7 +20,7 @@ var groups = {};
 // simple logger
 app.use(function(req, res, next){
   console.log('%s %s', req.method, req.url);
-  console.log('body = ' + req.body);
+  console.log('body = ' + JSON.stringify(req.body));
   next();
 });
  
@@ -82,19 +82,33 @@ app.post('/group/:groupId/user/:username', function(req, res){
 
   console.log('group id = ' + req.params.groupId);
   console.log('username = ' + req.params.username);
-  console.log('body = ' + req.body);
+  console.log('body = ' + JSON.stringify(req.body));
 
   var group = groups[req.params.groupId];
 
   if(typeof group === 'undefined'){
     console.log('Created group');
     group = {};
+    group.members = [];
+    group.group = req.params.groupId;
     groups[req.params.groupId] = group;
   }
 
-  group[req.body.name] = req.body;
+  var members = group.members;
+  var found = false;
+  for(var i=0;i<members.length;i++){
+    if(members[i].name === req.params.username){
+      members[i] = req.body;
+      break;
+    }
+  }
+
+  if(!found){
+    members.push(req.body);
+  }
 
   res.setHeader('Content-Type', 'application/json'); 
+  console.log('sendingback = ' + JSON.stringify(group));
   res.json(group);
 });
 
