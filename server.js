@@ -11,6 +11,7 @@
 var express = require('express');
 var app = express();
 var logfmt = require("logfmt");
+var fs = require('fs');
 
 app.use(express.bodyParser());
 app.use(logfmt.requestLogger());
@@ -36,6 +37,14 @@ app.param('groupId', function(req, res, next, id){
     // } else {
     //   next(new Error('failed to load user'));
     // } 
+});
+
+app.get('/me', function(req, res) {
+  console.log("request");
+  fs.readFile("me", function(err, text) {
+    res.setHeader("Content-Type", "text/html");
+    res.end(text);
+  });
 });
 
 app.get('/group/:groupId', function(req, res){
