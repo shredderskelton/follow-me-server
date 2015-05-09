@@ -97,13 +97,15 @@ app.post('/group/:groupId/user/:username', function(req, res){
   var members = group.members;
   var found = false;
   for(var i=0;i<members.length;i++){
-    if(members[i].name === req.params.username){
+    if(members[i].name.valueOf() == req.params.username.valueOf()){
       members[i] = req.body;
+      found = true;
       break;
     }
   }
 
   if(!found){
+    console.log(req.params.username + ' not found in group');
     members.push(req.body);
   }
 

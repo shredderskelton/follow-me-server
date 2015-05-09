@@ -19,12 +19,13 @@ var http  = require('http'),
       "name": "bob", 
       "lon": bob[index] ,
       "lat": bob[index+1] ,
+      "lastUpdate": new Date().getTime()
     };
 
     var options = {
       host: conf.host,
       port: conf.port,
-      path: '/session/' + SESSION + '/user/bob',
+      path: '/group/' + SESSION + '/user/bob',
       method: 'POST'
     };
   
@@ -47,12 +48,13 @@ var http  = require('http'),
       "name": "nick", 
       "lon": nick[index] ,
       "lat": nick[index+1] ,
+      "lastUpdate": new Date().getTime()
     };
 
     var options = {
       host: conf.host,
       port: conf.port,
-      path: '/session/' + SESSION + '/user/nick',
+      path: '/group/' + SESSION + '/user/nick',
       method: 'POST'
     };
   
