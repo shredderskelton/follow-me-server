@@ -47,6 +47,14 @@ app.get('/me', function(req, res) {
   });
 });
 
+app.get('/test.html', function(req, res) {
+  console.log("request");
+  fs.readFile("test.html", function(err, text) {
+    res.setHeader("Content-Type", "text/html");
+    res.end(text);
+  });
+});
+
 app.get('/group/:groupId', function(req, res){
 
   var groupPins = groups[req.params.groupId];
