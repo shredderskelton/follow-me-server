@@ -95,6 +95,30 @@ app.get('/search/:groupId', function(req, res){
   res.json(matches);
 });
 
+app.delete('/group/:groupId/user/:username', function(req, res){
+  var group = groups[req.params.groupId];
+  if(typeof group === 'undefined'){
+    console.log('group ' + req.params.groupId + ' not found');
+    res.status(404).send('Sorry cant find group!');
+  }
+
+  var members = group.members;
+  var index = -1;
+  for(var i=0;i<members.length;i++){
+    if(members[i].name.valueOf() == req.params.username.valueOf()){
+      index = i;
+    }
+  }
+
+  if (index > -1) {
+    members.splice(index, 1);
+    res.status(200).send('User deleted from group');
+  }
+  else{
+    res.status(404).send('Sorry cant find that user!');
+  }
+});
+
 app.post('/group/:groupId/user/:username', function(req, res){
 
   console.log('group id = ' + req.params.groupId);
