@@ -47,6 +47,14 @@ app.get('/me', function(req, res) {
   });
 });
 
+app.get('/ua-parser.min.js', function(req, res) {
+  console.log("request");
+  fs.readFile("ua-parser.min.js", function(err, text) {
+    res.setHeader("Content-Type", "text/html");
+    res.end(text);
+  });
+});
+
 app.get('/test.html', function(req, res) {
   console.log("request");
   fs.readFile("test.html", function(err, text) {
