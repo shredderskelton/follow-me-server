@@ -12,6 +12,7 @@ var express = require('express');
 var app = express();
 var logfmt = require("logfmt");
 var fs = require('fs');
+var mqtt = require('./mosca-server.js')
 
 app.use(express.bodyParser());
 app.use(logfmt.requestLogger());
