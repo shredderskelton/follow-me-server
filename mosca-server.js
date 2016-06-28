@@ -29,7 +29,7 @@ var moscaSettings = {
   //   port: process.env.PORT || 3000
   // }
    http: {
-    port: 3001,
+    port: process.env.PORT || 3001
     bundle: true,
     static: './'
   }
