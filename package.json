@@ -3,10 +3,15 @@
   "description": "hello world test app",
   "version": "0.0.1",
   "private": true,
+  "engines": {
+    "node": "5.9.1"
+  },
   "dependencies": {
+    "daemon": "1.1.0",
     "express": "3.x",
+    "fs": "0.0.2",
+    "http": "0.0.0",
     "logfmt": "~0.20.0",
-    "mosca": "2.0.1",
-    "daemon": "1.1.0"
+    "mosca": "2.0.1"
   }
 }
