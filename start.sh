@@ -6,4 +6,4 @@ start \
 -al forever.log \
 -ao out.log \
 -ae err.log \
-server.js
+mosca-server.js

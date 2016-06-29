@@ -1,21 +1,4 @@
-// console.log(process.pid);
-// console.log('am i crazy');
-// require('daemon')();
-
 var mosca = require('mosca')
-
-process.on('uncaughtException', function (exception) {
-  console.log(exception); // to see your exception details in the console
-  // if you are on production, maybe you can send the exception details to your
-  // email as well ?
-});
-// var backjack = {
-//   type: 'redis',
-//   db: 12,
-//   port: 6379,
-//   return_buffers: true,
-//   host: "localhost"
-// };
  
 var moscaSettings = {
   port: 1883,
@@ -35,6 +18,9 @@ var authenticate = function(client, username, password, callback) {
   var shouldAuthenticate = false;
   if(process.env.MQTT_USERNAME) { 
     shouldAuthenticate = true; 
+    console.log('Authentication enabled');   
+  }else{
+    console.log('Authentication disabled');   
   }
   if(shouldAuthenticate){
     console.log('Authenticating');
