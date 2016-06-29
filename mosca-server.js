@@ -2,7 +2,7 @@ var mosca = require('mosca')
  
 var moscaSettings = {
   port: 1883,
-  host: "127.0.0.1", // specify an host to bind to a single interface
+  host: "0.0.0.0", // specify an host to bind to a single interface
   id: 'followme', // used to publish in the $SYS/<id> topicspace
   stats: true, // publish stats in the $SYS/<id> topicspace
   logger: {
